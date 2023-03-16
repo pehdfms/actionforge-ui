@@ -1,6 +1,7 @@
 import "./App.css";
 import { Content } from "./components/Content";
 import { Footer } from "./components/Footer";
+import { Graph } from "./components/Graph";
 import { Header } from "./components/Header";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <div className="page">
       <Header />
       <Content>
-        <a>TODO</a>
+        <Graph />
       </Content>
       <Footer />
     </div>
