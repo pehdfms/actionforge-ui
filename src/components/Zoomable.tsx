@@ -16,6 +16,8 @@ export function Zoomable({ min, max, children, setScale }: Props) {
       let newScale = prevScale + event.deltaY * -0.001;
       newScale = clamp(min, newScale, max);
 
+      console.log(`drag ${newScale}`);
+
       return newScale;
     });
   };
@@ -27,8 +29,8 @@ export function Zoomable({ min, max, children, setScale }: Props) {
   }, [zoomScale, setScale]);
 
   return (
-    <div onWheel={handleWheel} style={{ transform: `scale(${zoomScale})` }}>
-      {children}
+    <div style={{ width: "100%", height: "100%" }} onWheel={handleWheel}>
+      <div style={{ transform: `scale(${zoomScale})` }}>{children}</div>
     </div>
   );
 }
