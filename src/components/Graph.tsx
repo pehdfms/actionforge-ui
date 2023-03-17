@@ -17,7 +17,7 @@ export function Graph() {
   return (
     <DraggableCore nodeRef={nodeRef} onDrag={handleDrag} scale={zoomScale}>
       <div ref={nodeRef} className="graph">
-        <Zoomable min={0.5} max={1.5} setScale={setZoomScale}>
+        <Zoomable min={0.25} max={1.25} setScale={setZoomScale}>
           <Card
             title="Jobs"
             items={["Lint", "Build", "Test"]}
