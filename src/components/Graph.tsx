@@ -1,38 +1,47 @@
-import { useRef, useState } from "react";
-import { DraggableCore, DraggableData, DraggableEvent } from "react-draggable";
-import { Card } from "./Card";
-import { Zoomable } from "./Zoomable";
+import { useCallback, useState } from "react";
+import ReactFlow, {
+  Controls,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  Connection,
+  Panel,
+} from "reactflow";
+
+import "reactflow/dist/style.css";
+import { GraphName } from "./GraphName";
+
+const initialNodes = [
+  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
+  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+];
+
+const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 
 export function Graph() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [zoomScale, setZoomScale] = useState(1);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [name, setName] = useState("name");
 
-  const handleDrag = (_: DraggableEvent, ui: DraggableData) => {
-    setPosition({ x: position.x + ui.deltaX, y: position.y + ui.deltaY });
-  };
+  const onConnect = useCallback(
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges]
+  );
 
-  const nodeRef = useRef(null);
-
-  // TODO disable zoom when dragging
   return (
-    <DraggableCore nodeRef={nodeRef} onDrag={handleDrag} scale={zoomScale}>
-      <div ref={nodeRef} className="graph">
-        <Zoomable min={0.25} max={1.25} setScale={setZoomScale}>
-          <Card
-            title="Jobs"
-            items={["Lint", "Build", "Test"]}
-            initialPosition={position}
-            dragScale={zoomScale}
-          />
-
-          <Card
-            title="Jobs"
-            items={["Lint", "Build", "Test"]}
-            initialPosition={position}
-            dragScale={zoomScale}
-          />
-        </Zoomable>
-      </div>
-    </DraggableCore>
+    <ReactFlow
+      nodes={nodes}
+      edges={edges}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
+      proOptions={{ hideAttribution: true }}
+      onConnect={onConnect}
+      className="graph"
+    >
+      <Panel position="top-left">
+        <GraphName name={name} onNameChange={setName} />
+      </Panel>
+      <Controls />
+    </ReactFlow>
   );
 }
