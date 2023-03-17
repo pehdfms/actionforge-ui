@@ -11,7 +11,11 @@ type Props = {
 export function Card({ title, items, initialPosition }: Props) {
   const nodeRef = useRef(null);
   return (
-    <Draggable nodeRef={nodeRef} defaultPosition={initialPosition}>
+    <Draggable
+      nodeRef={nodeRef}
+      positionOffset={initialPosition}
+      onStart={(e, _) => e.stopPropagation()}
+    >
       <div className="card" ref={nodeRef}>
         <h3 className="card-title">{`${title}:`}</h3>
         {items.map((item) => (
