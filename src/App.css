@@ -85,6 +85,29 @@ p, h1, h2, h3, h4, h5, h6 {
   cursor: grab;
 }
 
+.graph-name {
+  background-color: var(--color-canvas-inset);
+  padding: 16px;
+  border-radius: 6px;
+  display: flex;
+}
+
+.graph-name h1 {
+  color: var(--color-fg-default);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.graph-name input[type="text"] {
+  color: var(--color-fg-default);
+  font-weight: 600;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+}
+
 .card {
   width: 400px;
   display: flex;
@@ -140,4 +163,9 @@ a {
 
 a:hover {
   opacity: 70%;
+}
+
+#hide {
+  position: absolute;
+  visibility: hidden;
 }
