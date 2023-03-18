@@ -1,29 +1,18 @@
-import { useRef } from "react";
-import Draggable from "react-draggable";
+import { ChangeEvent, useCallback } from "react";
+import { Handle, Position } from "reactflow";
 import { Item } from "./Item";
 
-type Props = {
-  title: string;
-  items: string[];
-  initialPosition: { x: number; y: number };
-  dragScale: number;
-};
+export function Card() {
+  const onChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
+    console.log(evt.target.value);
+  }, []);
 
-export function Card({ title, items, initialPosition, dragScale }: Props) {
-  const nodeRef = useRef(null);
   return (
-    <Draggable
-      nodeRef={nodeRef}
-      positionOffset={initialPosition}
-      onStart={(e, _) => e.stopPropagation()}
-      scale={dragScale}
-    >
-      <div className="card" ref={nodeRef}>
-        <h3 className="card-title">{`${title}:`}</h3>
-        {items.map((item) => (
-          <Item name={item} key={item} />
-        ))}
-      </div>
-    </Draggable>
+    <div className="card">
+      <Handle type="target" position={Position.Left} />
+      <h3 className="card-title">TODO:</h3>
+      <Item name="TODO" key="TODO" />
+      <Handle type="source" position={Position.Right} id="a" />
+    </div>
   );
 }
