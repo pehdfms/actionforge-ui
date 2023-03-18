@@ -10,8 +10,10 @@ export function Card() {
   return (
     <div className="card">
       <Handle type="target" position={Position.Left} />
+
       <h3 className="card-title">TODO:</h3>
       <Item name="TODO" key="TODO" />
+
       <Handle type="source" position={Position.Right} id="a" />
     </div>
   );

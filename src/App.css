@@ -10,6 +10,7 @@
   --color-fg-muted: #8b949e;
   --color-header-bg: #161b22;
   --color-header-logo: #f0f6fc;
+  --color-card-connector: #484f58;
 }
 
 *, *::before, *::after {
@@ -126,6 +127,48 @@ p, h1, h2, h3, h4, h5, h6 {
   padding: 16px;
   border: 1px solid var(--color-border-default);
   border-radius: 6px;
+}
+
+.react-flow__handle {
+  background: var(--color-card-connector) !important;
+  border: 3px solid var(--color-card-bg) !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.react-flow__handle::after {
+  background: transparent;
+  width: 6px;
+  height: 12px;
+  border: 1px solid var(--color-border-default);
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  pointer-events: none;
+}
+
+.react-flow__handle-right {
+  right: -5px !important;
+}
+
+.react-flow__handle-right::after {
+  border-bottom-right-radius: 13px;
+  border-top-right-radius: 13px;
+  border-left: none;
+  left: 50%;
+}
+
+.react-flow__handle-left {
+  left: -5px !important;
+}
+
+.react-flow__handle-left::after {
+  border-bottom-left-radius: 13px;
+  border-top-left-radius: 13px;
+  border-right: none;
+  right: 50%;
 }
 
 .card-title {
