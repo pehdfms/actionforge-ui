@@ -130,6 +130,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .card-title {
   color: var(--color-fg-default);
+  margin-bottom: 1rem;
 }
 
 .card-item {
