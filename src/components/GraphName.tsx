@@ -43,6 +43,7 @@ export function GraphName({ name, onNameChange }: Props) {
       </span>
       <input
         type="text"
+        autoFocus
         style={{
           width: width + (isTyping ? 10 : 0),
           transition: "75ms",
