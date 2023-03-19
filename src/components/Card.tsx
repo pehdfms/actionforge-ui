@@ -8,12 +8,15 @@ export function Card() {
   }, []);
 
   // TODO make selected edge highlight handles as well (might require DOM trickery)
-  // TODO make title pop out of the top of the card like github actions' matrices
+  // FIXME get rid of small line below card header
   return (
     <div className="card">
       <Handle type="target" position={Position.Left} />
 
-      <h3 className="card-title">TODO:</h3>
+      <div className="card-header">
+        <h3 className="card-title">TODO:</h3>
+      </div>
+
       <Item name="TODO" key="TODO" />
 
       <Handle type="source" position={Position.Right} id="a" />

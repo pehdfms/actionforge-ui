@@ -128,6 +128,7 @@ p, h1, h2, h3, h4, h5, h6 {
   padding: 16px;
   border: 1px solid var(--color-border-default);
   border-radius: 6px;
+  border-top-left-radius: 0;
 }
 
 .react-flow__handle {
@@ -184,9 +185,36 @@ p, h1, h2, h3, h4, h5, h6 {
   stroke: var(--color-card-connector-highlight) !important;
 }
 
+.card-header {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  background: var(--color-card-bg);
+  padding-top: 4px;
+  padding-inline: 16px;
+  box-shadow: inset 0 1px 0 var(--color-border-default),
+              inset 1px 0 0 var(--color-border-default),
+              inset -1px 0 0 var(--color-border-default);
+  border-radius: 6px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.card-title::after {
+    position: absolute;
+    top: 15px;
+    width: 20px;
+    height: 16px;
+    margin-left: 15px;
+    content: "";
+    border-bottom-left-radius: 6px;
+    box-shadow: inset 1px 0 0 var(--color-border-default),
+                inset 0 -1px 0 var(--color-border-default),
+                -1px 3px var(--color-card-bg);
+}
+
 .card-title {
   color: var(--color-fg-default);
-  margin-bottom: 1rem;
 }
 
 .card-item {

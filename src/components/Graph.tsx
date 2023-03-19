@@ -36,6 +36,7 @@ export function Graph() {
     [setEdges]
   );
 
+  // TODO make separate GraphControls component
   return (
     <ReactFlow
       nodes={nodes}
