@@ -7,6 +7,8 @@ export function Card() {
     console.log(evt.target.value);
   }, []);
 
+  // TODO make selected edge highlight handles as well (might require DOM trickery)
+  // TODO make title pop out of the top of the card like github actions' matrices
   return (
     <div className="card">
       <Handle type="target" position={Position.Left} />

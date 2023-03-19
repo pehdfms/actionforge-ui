@@ -10,6 +10,7 @@
   --color-fg-muted: #8b949e;
   --color-header-bg: #161b22;
   --color-header-logo: #f0f6fc;
+  --color-card-connector-highlight: #388bfd;
   --color-card-connector: #484f58;
 }
 
@@ -169,6 +170,18 @@ p, h1, h2, h3, h4, h5, h6 {
   border-top-left-radius: 13px;
   border-right: none;
   right: 50%;
+}
+
+.react-flow__connection-path {
+  stroke: var(--color-card-connector) !important;
+}
+
+.react-flow__edge-path {
+  stroke: var(--color-card-connector) !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--color-card-connector-highlight) !important;
 }
 
 .card-title {
