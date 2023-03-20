@@ -1,5 +1,5 @@
 export type PushEvent = {
-  name: "push";
+  name: "Push";
   filters: {
     branches: string[];
     tags: string[];

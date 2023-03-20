@@ -1,9 +1,6 @@
 import { Node } from "reactflow";
 import { Event } from "./events";
+import { Job } from "./jobs";
 
-export interface NodeData {
-  type: "Jobs";
-}
-
-export type GraphNodeProps = Event | NodeData;
+export type GraphNodeProps = Event | Job;
 export type GraphNode = Node<GraphNodeProps>;

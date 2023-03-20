@@ -14,7 +14,25 @@ import { Card } from "./Card";
 import { GraphName } from "./GraphName";
 
 const initialNodes: GraphNode[] = [
-  { id: "1", position: { x: 200, y: 200 }, data: { type: "On" }, type: "card" },
+  {
+    id: "1",
+    position: { x: 200, y: 200 },
+    data: {
+      type: "On",
+      triggers: [
+        {
+          name: "Push",
+          filters: {
+            branches: [],
+            tags: [],
+            "branches-ignore": [],
+            "tags-ignore": [],
+          },
+        },
+      ],
+    },
+    type: "card",
+  },
   {
     id: "2",
     position: { x: 500, y: 500 },
