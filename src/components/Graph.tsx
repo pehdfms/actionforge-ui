@@ -9,12 +9,18 @@ import ReactFlow, {
 } from "reactflow";
 
 import "reactflow/dist/style.css";
+import { GraphNode } from "../domain";
 import { Card } from "./Card";
 import { GraphName } from "./GraphName";
 
-const initialNodes = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" }, type: "card" },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" }, type: "card" },
+const initialNodes: GraphNode[] = [
+  { id: "1", position: { x: 200, y: 200 }, data: { type: "On" }, type: "card" },
+  {
+    id: "2",
+    position: { x: 500, y: 500 },
+    data: { type: "Jobs" },
+    type: "card",
+  },
 ];
 
 const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
