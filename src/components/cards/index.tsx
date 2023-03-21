@@ -1,23 +1,25 @@
-import { ChangeEvent, useCallback, useEffect } from "react";
-import { Handle, Position, NodeProps } from "reactflow";
+import { NodeProps } from "reactflow";
 import { GraphNodeProps } from "../../domain";
+import { Event } from "../../domain/events";
+import { Job } from "../../domain/jobs";
 import { assertUnreachable } from "../../utils";
+import { EventCard } from "./EventCard";
+import { JobCard } from "./JobCard";
+import { WorkflowCard } from "./WorkflowCard";
 
-export function Card({ data }: NodeProps<GraphNodeProps>) {
-  const onChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
-    console.log(evt.target.value);
-  }, []);
+export function Card(props: NodeProps<GraphNodeProps>) {
+  const { data } = props;
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  let card;
+  let InternalCard;
   switch (data.type) {
     case "On":
-      console.log("hello");
+      InternalCard = () => EventCard(props as NodeProps<Event>);
       break;
     case "Jobs":
+      InternalCard = () => JobCard(props as NodeProps<Job>);
+      break;
+    case "Workflow":
+      InternalCard = () => WorkflowCard();
       break;
     default:
       assertUnreachable(data);
@@ -31,9 +33,7 @@ export function Card({ data }: NodeProps<GraphNodeProps>) {
         <h3 className="card-title">{data.type}</h3>
       </div>
 
-      {data.type != "On" && <Handle type="target" position={Position.Left} />}
-
-      <Handle type="source" position={Position.Right} id="a" />
+      <InternalCard />
     </div>
   );
 }

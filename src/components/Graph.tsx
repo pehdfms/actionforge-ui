@@ -10,10 +10,17 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import { GraphNode } from "../domain";
-import { Card } from "./Card";
+import { Card } from "./cards";
 import { GraphName } from "./GraphName";
+import { YamlPreview } from "./YamlPreview";
 
 const initialNodes: GraphNode[] = [
+  {
+    id: "0",
+    position: { x: 50, y: 0 },
+    data: { type: "Workflow" },
+    type: "card",
+  },
   {
     id: "1",
     position: { x: 200, y: 200 },
@@ -74,6 +81,7 @@ export function Graph() {
     >
       <Panel position="top-left">
         <GraphName name={name} onNameChange={setName} />
+        <YamlPreview nodes={nodes} edges={edges} />
       </Panel>
       <Controls />
     </ReactFlow>
