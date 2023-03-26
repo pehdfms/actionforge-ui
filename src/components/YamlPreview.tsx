@@ -11,9 +11,8 @@ function graphToYaml(nodes: Node[], edges: Edge[]): string {
 
   let output = "";
   for (const { data } of getOutgoers(workflowNode, nodes, edges)) {
-    if (data?.type === "On") {
-      const event = data as Event;
-      output += event.toYaml();
+    if (data instanceof Event) {
+      output += data.toYaml();
     }
   }
 
