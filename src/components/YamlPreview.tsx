@@ -1,7 +1,12 @@
 import { Node, Edge, getOutgoers } from "reactflow";
-import { Event, PushEvent } from "../domain/events";
+import { Event } from "../domain/events";
+import { containsCycle } from "../utils";
 
 function graphToYaml(nodes: Node[], edges: Edge[]): string {
+  if (containsCycle(edges)) {
+    return "Invalid flow: contains cycle";
+  }
+
   const workflowNode = nodes[0];
 
   let output = "";
