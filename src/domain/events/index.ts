@@ -1,3 +1,5 @@
+import { indent } from "../../utils";
+
 export abstract class Trigger {
   name: string;
   filters: { [k: string]: string[] } | undefined;
@@ -62,5 +64,15 @@ export class Event {
   constructor(triggers: Trigger[]) {
     this.type = "On";
     this.triggers = triggers;
+  }
+
+  toYaml(): string {
+    let output = `on:\n`;
+
+    for (const trigger of this.triggers) {
+      output += indent(trigger.toYaml());
+    }
+
+    return output;
   }
 }
