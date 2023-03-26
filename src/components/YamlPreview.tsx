@@ -28,7 +28,9 @@ type Props = {
 export function YamlPreview({ nodes, edges }: Props) {
   return (
     <div className="preview-window">
-      <h1>{graphToYaml(nodes, edges)}</h1>
+      <pre>
+        <code>{graphToYaml(nodes, edges)}</code>
+      </pre>
     </div>
   );
 }

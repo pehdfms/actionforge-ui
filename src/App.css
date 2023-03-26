@@ -81,15 +81,18 @@ p, h1, h2, h3, h4, h5, h6 {
   height: 100%;
   width: 100%;
   display: flex;
+  gap: 1rem;
 }
 
 .preview-window {
   width: 20%;
   height: 100%;
   padding: 1rem;
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
 }
 
-.preview-window h1 {
+.preview-window code {
   color: var(--color-fg-default);
 }
 
