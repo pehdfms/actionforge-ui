@@ -25,7 +25,14 @@ const initialNodes: GraphNode[] = [
   {
     id: "1",
     position: { x: 200, y: 200 },
-    data: new Event([new PushEvent()]),
+    data: new Event([
+      new PushEvent({
+        "branches-ignore": ["release"],
+        "tags-ignore": [],
+        branches: ["main", "develop"],
+        tags: [],
+      }),
+    ]),
     type: "card",
   },
   {
@@ -56,22 +63,26 @@ export function Graph() {
   );
 
   // TODO make separate GraphControls component
+  // TODO move yaml preview outside the graph
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      proOptions={{ hideAttribution: true }}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
-      className="graph"
-    >
-      <Panel position="top-left">
-        <GraphName name={name} onNameChange={setName} />
-        <YamlPreview nodes={nodes} edges={edges} />
-      </Panel>
-      <Controls />
-    </ReactFlow>
+    <div className="graph-container">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        proOptions={{ hideAttribution: true }}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        className="graph"
+      >
+        <Panel position="top-left">
+          <GraphName name={name} onNameChange={setName} />
+        </Panel>
+        <Controls />
+        <div style={{ color: "red", width: "100px", height: "100px" }}></div>
+      </ReactFlow>
+      <YamlPreview nodes={nodes} edges={edges} />
+    </div>
   );
 }

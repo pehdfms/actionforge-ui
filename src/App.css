@@ -77,6 +77,22 @@ p, h1, h2, h3, h4, h5, h6 {
   padding: 1.6rem 0.9rem;
 }
 
+.graph-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.preview-window {
+  width: 20%;
+  height: 100%;
+  padding: 1rem;
+}
+
+.preview-window h1 {
+  color: var(--color-fg-default);
+}
+
 .graph {
   width: 100%;
   height: 100%;
