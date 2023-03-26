@@ -67,6 +67,9 @@ export class Event {
   }
 
   toYaml(): string {
+    // TODO we can reduce yaml output here in two ways:
+    // one trigger with no filters / types can be reduced to on: trigger
+    // multiple triggers with no filters / types can be reduced to on: [trigger1, trigger2, ...]
     let output = `on:\n`;
 
     for (const trigger of this.triggers) {
