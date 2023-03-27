@@ -7,6 +7,11 @@ function graphToYaml(nodes: Node[], edges: Edge[]): string {
     return "Invalid flow: contains cycle";
   }
 
+  // TODO simplify this code
+  // convert to intermediate big object representation
+  // delegate validations to each nested object
+  // if passes all validations, return toYaml
+
   const workflowNode = nodes[0];
 
   let output = "";
