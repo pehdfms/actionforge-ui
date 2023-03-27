@@ -1,4 +1,4 @@
-export class Job {
+export class JobNode {
   type: "Jobs";
 
   constructor() {

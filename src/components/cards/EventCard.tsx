@@ -1,8 +1,8 @@
 import { Handle, Position, NodeProps } from "reactflow";
-import { Event } from "../../domain/events";
+import { EventNode } from "../../domain/events";
 import { Item } from "../Item";
 
-export function EventCard({ data }: NodeProps<Event>) {
+export function EventCard({ data }: NodeProps<EventNode>) {
   return (
     <>
       <Handle type="target" position={Position.Left} />

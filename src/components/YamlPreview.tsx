@@ -1,5 +1,5 @@
 import { Node, Edge, getOutgoers } from "reactflow";
-import { Event } from "../domain/events";
+import { EventNode } from "../domain/events";
 import { containsCycle } from "../utils";
 
 function graphToYaml(nodes: Node[], edges: Edge[]): string {
@@ -16,7 +16,7 @@ function graphToYaml(nodes: Node[], edges: Edge[]): string {
 
   let output = "";
   for (const { data } of getOutgoers(workflowNode, nodes, edges)) {
-    if (data instanceof Event) {
+    if (data instanceof EventNode) {
       output += data.toYaml();
     }
   }

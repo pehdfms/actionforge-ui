@@ -1,8 +1,8 @@
 import { Handle, Position, NodeProps } from "reactflow";
-import { Job } from "../../domain/jobs";
+import { JobNode } from "../../domain/jobs";
 import { Item } from "../Item";
 
-export function JobCard({ data }: NodeProps<Job>) {
+export function JobCard({ data }: NodeProps<JobNode>) {
   return (
     <>
       <Handle type="target" position={Position.Left} />

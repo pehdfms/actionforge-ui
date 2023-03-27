@@ -1,8 +1,8 @@
 import { Node } from "reactflow";
-import { Event } from "./events";
-import { Job } from "./jobs";
+import { EventNode } from "./events";
+import { JobNode } from "./jobs";
 
-export class Workflow {
+export class WorkflowNode {
   type: "Workflow";
 
   constructor() {
@@ -10,5 +10,5 @@ export class Workflow {
   }
 }
 
-export type GraphNodeProps = Event | Job | Workflow;
+export type GraphNodeProps = EventNode | JobNode | WorkflowNode;
 export type GraphNode = Node<GraphNodeProps>;

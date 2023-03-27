@@ -10,7 +10,7 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import { GraphNode } from "../domain";
-import { Event, PushEvent } from "../domain/events";
+import { EventNode, PushEvent } from "../domain/events";
 import { Card } from "./cards";
 import { GraphName } from "./GraphName";
 import { YamlPreview } from "./YamlPreview";
@@ -25,7 +25,7 @@ const initialNodes: GraphNode[] = [
   {
     id: "1",
     position: { x: 200, y: 200 },
-    data: new Event([
+    data: new EventNode([
       new PushEvent({
         "branches-ignore": ["release"],
         "tags-ignore": [],

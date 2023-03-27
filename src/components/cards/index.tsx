@@ -1,7 +1,7 @@
 import { NodeProps } from "reactflow";
 import { GraphNodeProps } from "../../domain";
-import { Event } from "../../domain/events";
-import { Job } from "../../domain/jobs";
+import { EventNode } from "../../domain/events";
+import { JobNode } from "../../domain/jobs";
 import { assertUnreachable } from "../../utils";
 import { EventCard } from "./EventCard";
 import { JobCard } from "./JobCard";
@@ -13,10 +13,10 @@ export function Card(props: NodeProps<GraphNodeProps>) {
   let InternalCard;
   switch (data.type) {
     case "On":
-      InternalCard = () => EventCard(props as NodeProps<Event>);
+      InternalCard = () => EventCard(props as NodeProps<EventNode>);
       break;
     case "Jobs":
-      InternalCard = () => JobCard(props as NodeProps<Job>);
+      InternalCard = () => JobCard(props as NodeProps<JobNode>);
       break;
     case "Workflow":
       InternalCard = () => WorkflowCard();

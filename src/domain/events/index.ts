@@ -57,7 +57,7 @@ export class PushEvent extends Trigger {
   }
 }
 
-export class Event {
+export class EventNode {
   type: "On";
   triggers: Trigger[];
 
