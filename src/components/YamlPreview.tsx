@@ -1,27 +1,10 @@
-import { Node, Edge, getOutgoers } from "reactflow";
-import { EventNode } from "../domain/events";
-import { containsCycle } from "../utils";
+import { Node, Edge } from "reactflow";
+import { buildWorkflow } from "../domain/workflow";
 
 function graphToYaml(nodes: Node[], edges: Edge[]): string {
-  if (containsCycle(edges)) {
-    return "Invalid flow: contains cycle";
-  }
+  const workflow = buildWorkflow(nodes, edges);
+  const output = workflow?.isValid() ? workflow.toYaml() : "Invalid workflow";
 
-  // TODO simplify this code
-  // convert to intermediate big object representation
-  // delegate validations to each nested object
-  // if passes all validations, return toYaml
-
-  const workflowNode = nodes[0];
-
-  let output = "";
-  for (const { data } of getOutgoers(workflowNode, nodes, edges)) {
-    if (data instanceof EventNode) {
-      output += data.toYaml();
-    }
-  }
-
-  console.log(output);
   return output;
 }
 

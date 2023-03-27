@@ -67,6 +67,24 @@ export class EventNode {
   }
 
   toYaml(): string {
+    let output = `on:\n`;
+
+    for (const trigger of this.triggers) {
+      output += indent(trigger.toYaml());
+    }
+
+    return output;
+  }
+}
+
+export class EventTriggers {
+  triggers: Trigger[];
+
+  constructor(triggers: Trigger[]) {
+    this.triggers = triggers;
+  }
+
+  toYaml(): string {
     // TODO we can reduce yaml output here in two ways:
     // one trigger with no filters / types can be reduced to on: trigger
     // multiple triggers with no filters / types can be reduced to on: [trigger1, trigger2, ...]
@@ -76,6 +94,6 @@ export class EventNode {
       output += indent(trigger.toYaml());
     }
 
-    return output;
+    return output + "\n";
   }
 }

@@ -1,6 +1,6 @@
-import { Node, Edge } from "reactflow";
-import { indent } from "../../utils";
-import { PushEvent, Trigger } from "../events";
+import { Node, Edge, getOutgoers } from "reactflow";
+import { containsCycle } from "../../utils";
+import { EventNode, EventTriggers, PushEvent } from "../events";
 
 export class WorkflowNode {
   type: "Workflow";
@@ -12,10 +12,10 @@ export class WorkflowNode {
 
 export class Workflow {
   name?: string;
-  triggers: Trigger[];
+  triggeredBy: EventTriggers;
 
-  constructor(triggers: Trigger[], name?: string) {
-    this.triggers = triggers;
+  constructor(triggeredBy: EventTriggers, name?: string) {
+    this.triggeredBy = triggeredBy;
     this.name = name;
   }
 
@@ -24,16 +24,27 @@ export class Workflow {
   }
 
   toYaml(): string {
-    let output = `on:\n`;
-
-    for (const trigger of this.triggers) {
-      output += indent(trigger.toYaml());
-    }
+    // TODO create / import a StringBuilder utility to make this code clearer
+    let output = this.name ? `name: ${this.name}\n\n` : "";
+    output += this.triggeredBy.toYaml();
 
     return output;
   }
 }
 
-export function buildWorkflow(nodes: Node[], edges: Edge[]): Workflow {
-  return new Workflow([new PushEvent()]);
+export function buildWorkflow(nodes: Node[], edges: Edge[]): Workflow | null {
+  if (containsCycle(edges)) {
+    return null;
+  }
+
+  const workflowNode = nodes[0];
+  let eventNode = null;
+
+  for (const { data } of getOutgoers(workflowNode, nodes, edges)) {
+    if (data instanceof EventNode) {
+      eventNode = new EventTriggers(data.triggers);
+    }
+  }
+
+  return eventNode ? new Workflow(eventNode) : null;
 }
