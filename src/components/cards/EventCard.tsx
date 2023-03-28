@@ -1,19 +1,12 @@
-import {
-  Handle,
-  Position,
-  NodeProps,
-  useNodes,
-  applyNodeChanges,
-  useReactFlow,
-} from "reactflow";
+import { Handle, Position, NodeProps, useReactFlow } from "reactflow";
 import { EventNode, PushEvent } from "../../domain/events";
-import { AddButton } from "../AddButton";
+import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
 export function EventCard({ data, id }: NodeProps<EventNode>) {
   const { setNodes } = useReactFlow();
 
-  const addTrigger = () => {
+  const addTrigger = (option: string) => {
     setNodes((nodes) =>
       nodes.map((node) => {
         console.log("got here");
@@ -37,7 +30,10 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
         <Item name={trigger.name} key={trigger.name} />
       ))}
 
-      <AddButton onClick={addTrigger} />
+      <AddDropdown
+        onClick={addTrigger}
+        options={["push", "dispatch", "pull"]}
+      />
 
       <Handle type="source" position={Position.Right} id="a" />
     </>

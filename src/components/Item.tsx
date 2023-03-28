@@ -1,7 +1,12 @@
 type Props = {
   name: string;
+  onClick?: () => void;
 };
 
-export function Item({ name }: Props) {
-  return <button className="card-item">{name}</button>;
+export function Item({ name, onClick }: Props) {
+  return (
+    <button className="card-item" onClick={onClick}>
+      {name}
+    </button>
+  );
 }

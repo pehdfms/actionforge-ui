@@ -319,3 +319,8 @@ a:hover {
   position: absolute;
   visibility: hidden;
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
