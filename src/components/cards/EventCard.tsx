@@ -1,4 +1,4 @@
-import { Handle, Position, NodeProps, useReactFlow } from "reactflow";
+import { Handle, Position, NodeProps, useReactFlow, Node } from "reactflow";
 import { EventNode, validTriggers } from "../../domain/events";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
@@ -24,10 +24,27 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     );
   };
 
+  const removeTrigger = (option: string) => {
+    setNodes((nodes) =>
+      nodes.map((node: Node<EventNode>) => {
+        if (node.id === id) {
+          node.data = {
+            ...node.data,
+            triggers: node.data.triggers.filter(
+              (trigger) => trigger.name != option
+            ),
+          };
+        }
+
+        return node;
+      })
+    );
+  };
+
   const getFilteredOptions = () => {
     const consumedOptions = data.triggers.map((trigger) => trigger.name);
 
-    return ["push", "create", "fork"].filter((option) => {
+    return Object.keys(validTriggers).filter((option) => {
       return !consumedOptions.includes(option);
     });
   };
@@ -37,7 +54,11 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
       <Handle type="target" position={Position.Left} />
 
       {data.triggers.map((trigger) => (
-        <Item name={trigger.name} key={trigger.name} />
+        <Item
+          name={trigger.name}
+          key={trigger.name}
+          onDelete={() => removeTrigger(trigger.name)}
+        />
       ))}
 
       <AddDropdown onClick={addTrigger} options={getFilteredOptions()} />

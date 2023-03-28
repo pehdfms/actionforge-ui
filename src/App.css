@@ -282,6 +282,7 @@ p, h1, h2, h3, h4, h5, h6 {
     border-radius: 6px;
     text-align: left;
     user-select: none;
+    flex-grow: 1;
 }
 
 .card-item:hover {
@@ -323,4 +324,15 @@ a:hover {
 .column {
   display: flex;
   flex-direction: column;
+}
+
+.delete-button{
+  padding-inline: 0.5rem;
+  color: var(--color-fg-default);
+  opacity: 50%;
+  border-radius: 6px;
+}
+
+.delete-button:hover {
+  background: var(--color-canvas-subtle);
 }
