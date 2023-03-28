@@ -329,7 +329,6 @@ a:hover {
 .delete-button{
   padding-inline: 0.5rem;
   color: var(--color-fg-default);
-  opacity: 50%;
   border-radius: 6px;
 }
 
