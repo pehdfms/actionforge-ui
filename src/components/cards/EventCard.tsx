@@ -32,6 +32,28 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     });
   };
 
+  const deleteFilterEntry = (
+    triggerName: string,
+    filter: string,
+    filterEntry: string
+  ) => {
+    updateNode(id, (node) => {
+      node.data = {
+        ...node.data,
+        triggers: node.data.triggers.map((trigger) => {
+          if (trigger.name === triggerName) {
+            trigger.filters![filter] = trigger.filters![filter].filter(
+              (filter) => filter != filterEntry
+            );
+          }
+
+          return trigger;
+        }),
+      };
+      return node;
+    });
+  };
+
   const getFilteredOptions = () => {
     const consumedOptions = data.triggers.map((trigger) => trigger.name);
 
@@ -44,15 +66,39 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     <>
       <Handle type="target" position={Position.Left} />
 
-      {data.triggers.map((trigger) => (
-        <Item
-          name={trigger.name}
-          key={trigger.name}
-          onDelete={() => removeTrigger(trigger.name)}
-        />
-      ))}
+      <div className="column" style={{ gap: "0.2rem" }}>
+        {data.triggers.map((trigger) => (
+          <div>
+            <Item
+              name={trigger.name}
+              key={trigger.name}
+              onDelete={() => removeTrigger(trigger.name)}
+            />
+            {trigger.filters && (
+              <div style={{ marginLeft: "2rem" }}>
+                {Object.keys(trigger.filters).map((filter) => (
+                  <>
+                    <Item name={filter} key={filter} />
+                    <div style={{ marginLeft: "2rem" }}>
+                      {trigger.filters![filter].map((filterEntry) => (
+                        <Item
+                          name={filterEntry}
+                          key={filterEntry}
+                          onDelete={() =>
+                            deleteFilterEntry(trigger.name, filter, filterEntry)
+                          }
+                        />
+                      ))}
+                    </div>
+                  </>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
 
-      <AddDropdown onClick={addTrigger} options={getFilteredOptions()} />
+        <AddDropdown onClick={addTrigger} options={getFilteredOptions()} />
+      </div>
 
       <Handle type="source" position={Position.Right} id="a" />
     </>
