@@ -1,5 +1,5 @@
 import { Handle, Position, NodeProps, useReactFlow } from "reactflow";
-import { EventNode, PushEvent } from "../../domain/events";
+import { EventNode, validTriggers } from "../../domain/events";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
@@ -9,17 +9,27 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
   const addTrigger = (option: string) => {
     setNodes((nodes) =>
       nodes.map((node) => {
-        console.log("got here");
         if (node.id === id) {
           node.data = {
             ...node.data,
-            triggers: [...node.data.triggers, new PushEvent()],
+            triggers: [
+              ...node.data.triggers,
+              new validTriggers[option as keyof typeof validTriggers](),
+            ],
           };
         }
 
         return node;
       })
     );
+  };
+
+  const getFilteredOptions = () => {
+    const consumedOptions = data.triggers.map((trigger) => trigger.name);
+
+    return ["push", "create", "fork"].filter((option) => {
+      return !consumedOptions.includes(option);
+    });
   };
 
   return (
@@ -30,10 +40,7 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
         <Item name={trigger.name} key={trigger.name} />
       ))}
 
-      <AddDropdown
-        onClick={addTrigger}
-        options={["push", "dispatch", "pull"]}
-      />
+      <AddDropdown onClick={addTrigger} options={getFilteredOptions()} />
 
       <Handle type="source" position={Position.Right} id="a" />
     </>

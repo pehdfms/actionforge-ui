@@ -15,6 +15,7 @@ export function AddDropdown({ onClick, options }: Props) {
     onClick(option);
   };
 
+  // TODO make dropdown absolute positioned and better styled
   return (
     <div className="column">
       <button

@@ -1,6 +1,6 @@
 import { Node, Edge, getOutgoers } from "reactflow";
 import { containsCycle } from "../../utils";
-import { EventNode, EventTriggers, PushEvent } from "../events";
+import { EventNode, EventTriggers } from "../events";
 
 export class WorkflowNode {
   type: "Workflow";
@@ -41,7 +41,7 @@ export function buildWorkflow(nodes: Node[], edges: Edge[]): Workflow | null {
   let eventNode = null;
 
   for (const { data } of getOutgoers(workflowNode, nodes, edges)) {
-    if (data instanceof EventNode) {
+    if (data.type === "On") {
       eventNode = new EventTriggers(data.triggers);
     }
   }

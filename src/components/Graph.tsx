@@ -10,7 +10,8 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import { GraphNode } from "../domain";
-import { EventNode, PushEvent } from "../domain/events";
+import { EventNode } from "../domain/events";
+import { PushEvent } from "../domain/events/push";
 import { Card } from "./cards";
 import { GraphName } from "./GraphName";
 import { YamlPreview } from "./YamlPreview";
