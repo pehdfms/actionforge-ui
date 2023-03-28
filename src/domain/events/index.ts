@@ -12,16 +12,6 @@ export class EventNode {
     this.type = "On";
     this.triggers = triggers;
   }
-
-  toYaml(): string {
-    let output = `on:\n`;
-
-    for (const trigger of this.triggers) {
-      output += indent(trigger.toYaml());
-    }
-
-    return output;
-  }
 }
 
 export class EventTriggers {
