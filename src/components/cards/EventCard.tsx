@@ -1,14 +1,14 @@
-import { Handle, Position, NodeProps, useReactFlow, Node } from "reactflow";
+import { Handle, Position, NodeProps } from "reactflow";
 import { EventNode, validTriggers } from "../../domain/events";
-import { updateNode } from "../../utils";
+import { useUpdateNode } from "../../utils";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
 export function EventCard({ data, id }: NodeProps<EventNode>) {
-  const { setNodes } = useReactFlow();
+  const updateNode = useUpdateNode<EventNode>();
 
   const addTrigger = (option: string) => {
-    updateNode<EventNode>(setNodes, id, (node) => {
+    updateNode(id, (node) => {
       node.data = {
         ...node.data,
         triggers: [
@@ -20,7 +20,7 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
   };
 
   const removeTrigger = (option: string) => {
-    updateNode<EventNode>(setNodes, id, (node) => {
+    updateNode(id, (node) => {
       node.data = {
         ...node.data,
         triggers: node.data.triggers.filter(
