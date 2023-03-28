@@ -41,6 +41,31 @@ input, button, textarea, select {
   font: inherit;
 }
 
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    cursor: pointer;
+
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+}
+
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
@@ -66,6 +91,17 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .page-title {
   color: var(--color-header-logo);
+}
+
+.add-button {
+  background: var(--color-canvas-subtle);
+  color: var(--color-fg-default);
+  opacity: 50%;
+  border-radius: 6px;
+}
+
+.add-button:hover {
+  opacity: 100%;
 }
 
 .content {
