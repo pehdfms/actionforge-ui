@@ -1,5 +1,6 @@
 import { Handle, Position, NodeProps, useReactFlow, Node } from "reactflow";
 import { EventNode, validTriggers } from "../../domain/events";
+import { updateNode } from "../../utils";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
@@ -7,38 +8,28 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
   const { setNodes } = useReactFlow();
 
   const addTrigger = (option: string) => {
-    setNodes((nodes) =>
-      nodes.map((node) => {
-        if (node.id === id) {
-          node.data = {
-            ...node.data,
-            triggers: [
-              ...node.data.triggers,
-              new validTriggers[option as keyof typeof validTriggers](),
-            ],
-          };
-        }
-
-        return node;
-      })
-    );
+    updateNode<EventNode>(setNodes, id, (node) => {
+      node.data = {
+        ...node.data,
+        triggers: [
+          ...node.data.triggers,
+          new validTriggers[option as keyof typeof validTriggers](),
+        ],
+      };
+    });
   };
 
   const removeTrigger = (option: string) => {
-    setNodes((nodes) =>
-      nodes.map((node: Node<EventNode>) => {
-        if (node.id === id) {
-          node.data = {
-            ...node.data,
-            triggers: node.data.triggers.filter(
-              (trigger) => trigger.name != option
-            ),
-          };
-        }
+    updateNode<EventNode>(setNodes, id, (node) => {
+      node.data = {
+        ...node.data,
+        triggers: node.data.triggers.filter(
+          (trigger) => trigger.name != option
+        ),
+      };
 
-        return node;
-      })
-    );
+      return node;
+    });
   };
 
   const getFilteredOptions = () => {

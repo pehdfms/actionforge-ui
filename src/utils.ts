@@ -1,4 +1,4 @@
-import { Edge } from "reactflow";
+import { Node, Edge, Instance } from "reactflow";
 
 export function clamp(min: number, n: number, max: number): number {
   return Math.min(Math.max(min, n), max);
@@ -51,4 +51,22 @@ export function containsCycle(edges: Edge[]): boolean {
   }
 
   return false;
+}
+
+// TODO can hooks be composed? that way I wouldn't need setNodes
+// TODO also, immer?
+export function updateNode<T>(
+  setNodes: Instance.SetNodes<any>,
+  id: string,
+  updateFunction: (node: Node<T>) => void
+) {
+  setNodes((nodes) =>
+    nodes.map((node) => {
+      if (node.id === id) {
+        updateFunction(node);
+      }
+
+      return node;
+    })
+  );
 }
