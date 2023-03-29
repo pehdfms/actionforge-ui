@@ -1,18 +1,65 @@
 import { Handle, Position, NodeProps } from "reactflow";
 import { EventNode, ValidTriggerKey, validTriggers } from "../../domain/events";
-import { useUpdateNode } from "../../hooks/useUpdateNode";
+import { Trigger } from "../../domain/events/trigger";
+import {
+  updateNodeFunctionType,
+  useUpdateNode,
+} from "../../hooks/useUpdateNode";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
-export function EventCard({ data, id }: NodeProps<EventNode>) {
-  const updateNode = useUpdateNode<EventNode>(id);
+type FilterSectionProps = {
+  triggerName: string;
+  filter: string;
+  filterEntries: string[];
+  updateNode: updateNodeFunctionType<EventNode>;
+};
 
-  const addTrigger = (option: string) => {
-    updateNode(({ data }) => {
-      data.triggers.push(new validTriggers[option as ValidTriggerKey]());
+function FilterSection({
+  triggerName,
+  filter,
+  filterEntries,
+  updateNode,
+}: FilterSectionProps) {
+  const removeFilterEntry = (filterEntry: string) => {
+    updateNode(({ data: { triggers } }) => {
+      const filterEntries = triggers.find(
+        (trigger) => trigger.name === triggerName
+      )!.filters![filter];
+
+      const index = filterEntries.findIndex((filter) => filter === filterEntry);
+
+      filterEntries.splice(index, 1);
     });
   };
 
+  return (
+    <>
+      <Item name={filter} key={filter} />
+      <div className="nested">
+        {filterEntries.map((filterEntry) => (
+          <Item
+            name={filterEntry}
+            key={filterEntry}
+            onDelete={() => removeFilterEntry(filterEntry)}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+type TriggerSectionProps = {
+  trigger: Trigger;
+  allowRemoval: boolean;
+  updateNode: updateNodeFunctionType<EventNode>;
+};
+
+function TriggerSection({
+  trigger,
+  allowRemoval,
+  updateNode,
+}: TriggerSectionProps) {
   const removeTrigger = (triggerName: string) => {
     updateNode(({ data: { triggers } }) => {
       const index = triggers.findIndex(
@@ -23,19 +70,41 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     });
   };
 
-  const removeFilterEntry = (
-    triggerName: string,
-    filter: string,
-    filterEntry: string
-  ) => {
-    updateNode(({ data: { triggers } }) => {
-      const filterEntries = triggers.find(
-        (trigger) => trigger.name === triggerName
-      )!.filters![filter];
+  return (
+    <div>
+      <Item
+        name={trigger.name}
+        key={trigger.name}
+        onDelete={
+          allowRemoval
+            ? () => {
+                removeTrigger(trigger.name);
+              }
+            : undefined
+        }
+      />
+      {trigger.filters && (
+        <div className="nested">
+          {Object.keys(trigger.filters).map((filter) => (
+            <FilterSection
+              filter={filter}
+              filterEntries={trigger.filters![filter]}
+              triggerName={trigger.name}
+              updateNode={updateNode}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
-      const index = filterEntries.findIndex((filter) => filter === filterEntry);
+export function EventCard({ data, id }: NodeProps<EventNode>) {
+  const updateNode = useUpdateNode<EventNode>(id);
 
-      filterEntries.splice(index, 1);
+  const addTrigger = (option: string) => {
+    updateNode(({ data }) => {
+      data.triggers.push(new validTriggers[option as ValidTriggerKey]());
     });
   };
 
@@ -53,39 +122,11 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
 
       <div className="column" style={{ gap: "0.2rem" }}>
         {data.triggers.map((trigger) => (
-          <div>
-            <Item
-              name={trigger.name}
-              key={trigger.name}
-              onDelete={
-                data.triggers.length > 1
-                  ? () => {
-                      removeTrigger(trigger.name);
-                    }
-                  : undefined
-              }
-            />
-            {trigger.filters && (
-              <div className="nested">
-                {Object.keys(trigger.filters).map((filter) => (
-                  <>
-                    <Item name={filter} key={filter} />
-                    <div className="nested">
-                      {trigger.filters![filter].map((filterEntry) => (
-                        <Item
-                          name={filterEntry}
-                          key={filterEntry}
-                          onDelete={() =>
-                            removeFilterEntry(trigger.name, filter, filterEntry)
-                          }
-                        />
-                      ))}
-                    </div>
-                  </>
-                ))}
-              </div>
-            )}
-          </div>
+          <TriggerSection
+            trigger={trigger}
+            updateNode={updateNode}
+            allowRemoval={data.triggers.length > 1}
+          />
         ))}
 
         <AddDropdown onClick={addTrigger} options={getFilteredOptions()} />

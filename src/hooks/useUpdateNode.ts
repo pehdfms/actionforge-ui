@@ -15,3 +15,5 @@ export function useUpdateNode<T>(id: string) {
     );
   };
 }
+
+export type updateNodeFunctionType<T> = ReturnType<typeof useUpdateNode<T>>;
