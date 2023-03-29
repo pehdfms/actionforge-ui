@@ -44,6 +44,7 @@ function FilterSection({
             onDelete={() => removeFilterEntry(filterEntry)}
           />
         ))}
+        <AddDropdown onClick={() => {}} options={[]} />
       </div>
     </>
   );

@@ -341,4 +341,7 @@ a:hover {
   background: var(--color-card-bg);
   filter: brightness(92.5%);
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
