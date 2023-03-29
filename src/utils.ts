@@ -1,9 +1,4 @@
-import produce from "immer";
-import { Node, Edge, Instance, useReactFlow } from "reactflow";
-
-export function clamp(min: number, n: number, max: number): number {
-  return Math.min(Math.max(min, n), max);
-}
+import { Edge } from "reactflow";
 
 export function assertUnreachable(_: never): never {
   throw new Error("Reached situation thought unreachable, all hope is lost");

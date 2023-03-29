@@ -1,12 +1,5 @@
 import { Node, Edge } from "reactflow";
-import { buildWorkflow } from "../domain/workflow";
-
-function graphToYaml(nodes: Node[], edges: Edge[]): string {
-  const workflow = buildWorkflow(nodes, edges);
-  const output = workflow?.isValid() ? workflow.toYaml() : "Invalid workflow";
-
-  return output;
-}
+import { useGraphToYaml } from "../hooks/useGraphToYaml";
 
 type Props = {
   nodes: Node[];
@@ -14,10 +7,12 @@ type Props = {
 };
 
 export function YamlPreview({ nodes, edges }: Props) {
+  const yaml = useGraphToYaml(nodes, edges);
+
   return (
     <div className="preview-window">
       <pre>
-        <code>{graphToYaml(nodes, edges)}</code>
+        <code>{yaml}</code>
       </pre>
     </div>
   );
