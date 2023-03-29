@@ -1,6 +1,6 @@
 import { Handle, Position, NodeProps } from "reactflow";
 import { EventNode, ValidTriggerKey, validTriggers } from "../../domain/events";
-import { useUpdateNode } from "../../utils";
+import { useUpdateNode } from "../../hooks/useUpdateNode";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
