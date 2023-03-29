@@ -43,3 +43,5 @@ export const validTriggers = {
   fork: ForkEvent,
   push: PushEvent,
 };
+
+export type ValidTriggerKey = keyof typeof validTriggers;

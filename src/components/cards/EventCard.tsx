@@ -1,5 +1,5 @@
 import { Handle, Position, NodeProps } from "reactflow";
-import { EventNode, validTriggers } from "../../domain/events";
+import { EventNode, ValidTriggerKey, validTriggers } from "../../domain/events";
 import { useUpdateNode } from "../../utils";
 import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
@@ -9,9 +9,7 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
 
   const addTrigger = (option: string) => {
     updateNode(id, ({ data }) => {
-      data.triggers.push(
-        new validTriggers[option as keyof typeof validTriggers]()
-      );
+      data.triggers.push(new validTriggers[option as ValidTriggerKey]());
     });
   };
 
