@@ -96,6 +96,7 @@ function TriggerSection({
               filterEntries={trigger.filters![filter]}
               triggerName={trigger.name}
               updateNode={updateNode}
+              key={filter}
             />
           ))}
         </div>
@@ -131,6 +132,7 @@ export function EventCard(id: string, data: EventNode) {
             trigger={trigger}
             updateNode={updateNode}
             allowRemoval={data.triggers.length > 1}
+            key={trigger.name}
           />
         ))}
 
