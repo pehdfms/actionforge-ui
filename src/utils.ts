@@ -54,10 +54,10 @@ export function containsCycle(edges: Edge[]): boolean {
   return false;
 }
 
-export function useUpdateNode<T>() {
+export function useUpdateNode<T>(id: string) {
   const { setNodes } = useReactFlow();
 
-  return (id: string, updateFunction: (node: Node<T>) => void) => {
+  return (updateFunction: (node: Node<T>) => void) => {
     setNodes((nodes) =>
       produce(nodes, (draftNodes) => {
         const node = draftNodes.find((node) => node.id === id);

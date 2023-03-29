@@ -5,16 +5,16 @@ import { AddDropdown } from "../AddDropdown";
 import { Item } from "../Item";
 
 export function EventCard({ data, id }: NodeProps<EventNode>) {
-  const updateNode = useUpdateNode<EventNode>();
+  const updateNode = useUpdateNode<EventNode>(id);
 
   const addTrigger = (option: string) => {
-    updateNode(id, ({ data }) => {
+    updateNode(({ data }) => {
       data.triggers.push(new validTriggers[option as ValidTriggerKey]());
     });
   };
 
   const removeTrigger = (option: string) => {
-    updateNode(id, ({ data }) => {
+    updateNode(({ data }) => {
       data.triggers = data.triggers.filter((trigger) => trigger.name != option);
     });
   };
@@ -24,7 +24,7 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     filter: string,
     filterEntry: string
   ) => {
-    updateNode(id, ({ data }) => {
+    updateNode(({ data }) => {
       const trigger = data.triggers.find(
         (trigger) => trigger.name === triggerName
       )!;
