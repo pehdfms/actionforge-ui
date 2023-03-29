@@ -13,9 +13,13 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     });
   };
 
-  const removeTrigger = (option: string) => {
-    updateNode(({ data }) => {
-      data.triggers = data.triggers.filter((trigger) => trigger.name != option);
+  const removeTrigger = (triggerName: string) => {
+    updateNode(({ data: { triggers } }) => {
+      const index = triggers.findIndex(
+        (trigger) => trigger.name === triggerName
+      );
+
+      triggers.splice(index, 1);
     });
   };
 
@@ -24,14 +28,14 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     filter: string,
     filterEntry: string
   ) => {
-    updateNode(({ data }) => {
-      const trigger = data.triggers.find(
+    updateNode(({ data: { triggers } }) => {
+      const filterEntries = triggers.find(
         (trigger) => trigger.name === triggerName
-      )!;
+      )!.filters![filter];
 
-      trigger.filters![filter] = trigger.filters![filter].filter(
-        (filter) => filter != filterEntry
-      );
+      const index = filterEntries.findIndex((filter) => filter === filterEntry);
+
+      filterEntries.splice(index, 1);
     });
   };
 
