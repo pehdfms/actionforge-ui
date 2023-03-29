@@ -1,3 +1,4 @@
+import produce from "immer";
 import { Node, Edge, Instance, useReactFlow } from "reactflow";
 
 export function clamp(min: number, n: number, max: number): number {
@@ -53,18 +54,16 @@ export function containsCycle(edges: Edge[]): boolean {
   return false;
 }
 
-// TODO immer?
 export function useUpdateNode<T>() {
   const { setNodes } = useReactFlow();
 
   return (id: string, updateFunction: (node: Node<T>) => void) => {
     setNodes((nodes) =>
-      nodes.map((node) => {
-        if (node.id === id) {
+      produce(nodes, (draftNodes) => {
+        const node = draftNodes.find((node) => node.id === id);
+        if (node) {
           updateFunction(node);
         }
-
-        return node;
       })
     );
   };

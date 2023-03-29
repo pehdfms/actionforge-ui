@@ -8,27 +8,16 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
   const updateNode = useUpdateNode<EventNode>();
 
   const addTrigger = (option: string) => {
-    updateNode(id, (node) => {
-      node.data = {
-        ...node.data,
-        triggers: [
-          ...node.data.triggers,
-          new validTriggers[option as keyof typeof validTriggers](),
-        ],
-      };
+    updateNode(id, ({ data }) => {
+      data.triggers.push(
+        new validTriggers[option as keyof typeof validTriggers]()
+      );
     });
   };
 
   const removeTrigger = (option: string) => {
-    updateNode(id, (node) => {
-      node.data = {
-        ...node.data,
-        triggers: node.data.triggers.filter(
-          (trigger) => trigger.name != option
-        ),
-      };
-
-      return node;
+    updateNode(id, ({ data }) => {
+      data.triggers = data.triggers.filter((trigger) => trigger.name != option);
     });
   };
 
@@ -37,20 +26,14 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     filter: string,
     filterEntry: string
   ) => {
-    updateNode(id, (node) => {
-      node.data = {
-        ...node.data,
-        triggers: node.data.triggers.map((trigger) => {
-          if (trigger.name === triggerName) {
-            trigger.filters![filter] = trigger.filters![filter].filter(
-              (filter) => filter != filterEntry
-            );
-          }
+    updateNode(id, ({ data }) => {
+      const trigger = data.triggers.find(
+        (trigger) => trigger.name === triggerName
+      )!;
 
-          return trigger;
-        }),
-      };
-      return node;
+      trigger.filters![filter] = trigger.filters![filter].filter(
+        (filter) => filter != filterEntry
+      );
     });
   };
 

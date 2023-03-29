@@ -1,3 +1,4 @@
+import { immerable } from "immer";
 import { indent } from "../../utils";
 import { CreateEvent } from "./create";
 import { ForkEvent } from "./fork";
@@ -5,6 +6,8 @@ import { PushEvent } from "./push";
 import { Trigger } from "./trigger";
 
 export class EventNode {
+  [immerable] = true;
+
   type: "On";
   triggers: Trigger[];
 

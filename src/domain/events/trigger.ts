@@ -1,4 +1,8 @@
+import { immerable } from "immer";
+
 export abstract class Trigger {
+  [immerable] = true;
+
   name: string;
   filters: { [k: string]: string[] } | undefined;
   types: string[] | undefined;
