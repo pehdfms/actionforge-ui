@@ -23,7 +23,7 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
     });
   };
 
-  const deleteFilterEntry = (
+  const removeFilterEntry = (
     triggerName: string,
     filter: string,
     filterEntry: string
@@ -57,7 +57,13 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
             <Item
               name={trigger.name}
               key={trigger.name}
-              onDelete={() => removeTrigger(trigger.name)}
+              onDelete={
+                data.triggers.length > 1
+                  ? () => {
+                      removeTrigger(trigger.name);
+                    }
+                  : undefined
+              }
             />
             {trigger.filters && (
               <div style={{ marginLeft: "2rem" }}>
@@ -70,7 +76,7 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
                           name={filterEntry}
                           key={filterEntry}
                           onDelete={() =>
-                            deleteFilterEntry(trigger.name, filter, filterEntry)
+                            removeFilterEntry(trigger.name, filter, filterEntry)
                           }
                         />
                       ))}
