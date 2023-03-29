@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Handle, Position, NodeProps } from "reactflow";
 import { EventNode, ValidTriggerKey, validTriggers } from "../../domain/events";
 import { Trigger } from "../../domain/events/trigger";
@@ -61,6 +62,8 @@ function TriggerSection({
   allowRemoval,
   updateNode,
 }: TriggerSectionProps) {
+  const [dropdownVisible, setDropdownVisible] = useState(true);
+
   const removeTrigger = (triggerName: string) => {
     updateNode(({ data: { triggers } }) => {
       const index = triggers.findIndex(
@@ -76,6 +79,7 @@ function TriggerSection({
       <Item
         name={trigger.name}
         key={trigger.name}
+        onClick={() => setDropdownVisible(!dropdownVisible)}
         onDelete={
           allowRemoval
             ? () => {
@@ -84,7 +88,7 @@ function TriggerSection({
             : undefined
         }
       />
-      {trigger.filters && (
+      {trigger.filters && dropdownVisible && (
         <div className="nested">
           {Object.keys(trigger.filters).map((filter) => (
             <FilterSection
@@ -100,7 +104,7 @@ function TriggerSection({
   );
 }
 
-export function EventCard({ data, id }: NodeProps<EventNode>) {
+export function EventCard(id: string, data: EventNode) {
   const updateNode = useUpdateNode<EventNode>(id);
 
   const addTrigger = (option: string) => {

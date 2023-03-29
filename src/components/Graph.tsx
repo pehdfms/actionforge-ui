@@ -6,6 +6,7 @@ import ReactFlow, {
   addEdge,
   Connection,
   Panel,
+  ReactFlowProvider,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -67,23 +68,25 @@ export function Graph() {
   // TODO move yaml preview outside the graph
   return (
     <div className="graph-container">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        proOptions={{ hideAttribution: true }}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-        className="graph"
-      >
-        <Panel position="top-left">
-          <GraphName name={name} onNameChange={setName} />
-        </Panel>
-        <Controls />
-        <div style={{ color: "red", width: "100px", height: "100px" }}></div>
-      </ReactFlow>
-      <YamlPreview nodes={nodes} edges={edges} />
+      <ReactFlowProvider>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          proOptions={{ hideAttribution: true }}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          className="graph"
+        >
+          <Panel position="top-left">
+            <GraphName name={name} onNameChange={setName} />
+          </Panel>
+          <Controls />
+          <div style={{ color: "red", width: "100px", height: "100px" }}></div>
+        </ReactFlow>
+        <YamlPreview nodes={nodes} edges={edges} />
+      </ReactFlowProvider>
     </div>
   );
 }
