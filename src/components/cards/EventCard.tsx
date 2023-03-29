@@ -66,11 +66,11 @@ export function EventCard({ data, id }: NodeProps<EventNode>) {
               }
             />
             {trigger.filters && (
-              <div style={{ marginLeft: "2rem" }}>
+              <div className="nested">
                 {Object.keys(trigger.filters).map((filter) => (
                   <>
                     <Item name={filter} key={filter} />
-                    <div style={{ marginLeft: "2rem" }}>
+                    <div className="nested">
                       {trigger.filters![filter].map((filterEntry) => (
                         <Item
                           name={filterEntry}
