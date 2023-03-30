@@ -2,12 +2,26 @@ import { Add } from "@mui/icons-material";
 import { useState } from "react";
 import { Item } from "./Item";
 
-type Props = {
+type ButtonProps = {
+  onClick: () => void;
+};
+
+export function AddButton({ onClick }: ButtonProps) {
+  return (
+    <div className="column">
+      <button className="add-button" onClick={onClick}>
+        <Add />
+      </button>
+    </div>
+  );
+}
+
+type DropdownProps = {
   onClick: (option: string) => void;
   options: string[];
 };
 
-export function AddDropdown({ onClick, options }: Props) {
+export function AddDropdown({ onClick, options }: DropdownProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const handleClick = (option: string) => {

@@ -6,8 +6,8 @@ import {
   updateNodeFunctionType,
   useUpdateNode,
 } from "../../hooks/useUpdateNode";
-import { AddDropdown } from "../AddDropdown";
-import { Item } from "../Item";
+import { AddButton, AddDropdown } from "../Add";
+import { InputItem, Item } from "../Item";
 
 type FilterSectionProps = {
   triggerName: string;
@@ -22,15 +22,29 @@ function FilterSection({
   filterEntries,
   updateNode,
 }: FilterSectionProps) {
-  const removeFilterEntry = (filterEntry: string) => {
+  const removeFilterEntry = (idx: number) => {
     updateNode(({ data: { triggers } }) => {
       const filterEntries = triggers.find(
         (trigger) => trigger.name === triggerName
       )!.filters![filter];
 
-      const index = filterEntries.findIndex((filter) => filter === filterEntry);
+      filterEntries.splice(idx, 1);
+    });
+  };
 
-      filterEntries.splice(index, 1);
+  const updateFilterEntry = (idx: number, value: string) => {
+    updateNode(({ data: { triggers } }) => {
+      triggers.find((trigger) => trigger.name === triggerName)!.filters![
+        filter
+      ][idx] = value;
+    });
+  };
+
+  const addFilterEntry = () => {
+    updateNode(({ data: { triggers } }) => {
+      triggers
+        .find((trigger) => trigger.name === triggerName)!
+        .filters![filter].push("click to write your filter here");
     });
   };
 
@@ -38,14 +52,15 @@ function FilterSection({
     <>
       <Item name={filter} key={filter} />
       <div className="nested">
-        {filterEntries.map((filterEntry) => (
-          <Item
-            name={filterEntry}
+        {filterEntries.map((filterEntry, idx) => (
+          <InputItem
+            value={filterEntry}
+            onChange={(value) => updateFilterEntry(idx, value)}
+            onDelete={() => removeFilterEntry(idx)}
             key={filterEntry}
-            onDelete={() => removeFilterEntry(filterEntry)}
           />
         ))}
-        <AddDropdown onClick={() => {}} options={[]} />
+        <AddButton onClick={addFilterEntry} />
       </div>
     </>
   );
