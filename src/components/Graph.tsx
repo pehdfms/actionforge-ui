@@ -20,13 +20,13 @@ import { YamlPreview } from "./YamlPreview";
 const initialNodes: GraphNode[] = [
   {
     id: "0",
-    position: { x: 50, y: 0 },
+    position: { x: 0, y: 0 },
     data: { type: "Workflow" },
     type: "card",
   },
   {
     id: "1",
-    position: { x: 200, y: 200 },
+    position: { x: 750, y: 0 },
     data: new EventNode([
       new PushEvent({
         "branches-ignore": ["release"],
@@ -39,13 +39,16 @@ const initialNodes: GraphNode[] = [
   },
   {
     id: "2",
-    position: { x: 500, y: 500 },
+    position: { x: 1500, y: 500 },
     data: { type: "Jobs" },
     type: "card",
   },
 ];
 
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [
+  { id: "e0-1", source: "0", target: "1" },
+  { id: "e1-2", source: "1", target: "2" },
+];
 
 export function Graph() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -78,6 +81,7 @@ export function Graph() {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           className="graph"
+          fitView
         >
           <Panel position="top-left">
             <GraphName name={name} onNameChange={setName} />
