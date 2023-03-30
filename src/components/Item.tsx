@@ -25,16 +25,27 @@ export function Item({ name, onClick, onDelete }: ItemProps) {
 }
 
 type InputItemProps = {
+  label?: string;
   value: string;
   onChange: (value: string) => void;
   onDelete?: () => void;
 };
 
-export function InputItem({ value, onChange, onDelete }: InputItemProps) {
+export function InputItem({
+  label,
+  value,
+  onChange,
+  onDelete,
+}: InputItemProps) {
   const [tempValue, setTempValue] = useState(value);
 
   return (
     <div style={{ width: "100%", display: "flex" }}>
+      {label && (
+        <h3 className="card-item" style={{ flexGrow: 0, fontSize: "16px" }}>
+          {label}:
+        </h3>
+      )}
       <input
         className="card-item"
         value={tempValue}

@@ -13,6 +13,7 @@ import "reactflow/dist/style.css";
 import { GraphNode } from "../domain";
 import { EventNode } from "../domain/events";
 import { PushEvent } from "../domain/events/push";
+import { WorkflowNode } from "../domain/workflow";
 import { Card } from "./cards";
 import { GraphName } from "./GraphName";
 import { YamlPreview } from "./YamlPreview";
@@ -21,7 +22,7 @@ const initialNodes: GraphNode[] = [
   {
     id: "0",
     position: { x: 0, y: 0 },
-    data: { type: "Workflow" },
+    data: new WorkflowNode("example"),
     type: "card",
   },
   {

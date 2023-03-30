@@ -1,11 +1,21 @@
 import { Handle, Position } from "reactflow";
-import { Item } from "../Item";
+import { WorkflowNode } from "../../domain/workflow";
+import { useUpdateNode } from "../../hooks/useUpdateNode";
+import { InputItem } from "../Item";
 
-export function WorkflowCard() {
+export function WorkflowCard(id: string, data: WorkflowNode) {
+  const updateNode = useUpdateNode<WorkflowNode>(id);
+
+  const updateName = (name: string) => {
+    updateNode(({ data }) => {
+      data.name = name;
+    });
+  };
+
   return (
     <>
       <Handle type="source" position={Position.Right} id="a" />
-      <Item name="Start" key="Start" />
+      <InputItem label="name" value={data.name} onChange={updateName} />
     </>
   );
 }

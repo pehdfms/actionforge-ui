@@ -1,12 +1,17 @@
+import { immerable } from "immer";
 import { Node, Edge, getOutgoers } from "reactflow";
 import { containsCycle } from "../../utils";
-import { EventNode, EventTriggers } from "../events";
+import { EventTriggers } from "../events";
 
 export class WorkflowNode {
-  type: "Workflow";
+  [immerable] = true;
 
-  constructor() {
+  type: "Workflow";
+  name: string;
+
+  constructor(name: string) {
     this.type = "Workflow";
+    this.name = name;
   }
 }
 
@@ -46,5 +51,5 @@ export function buildWorkflow(nodes: Node[], edges: Edge[]): Workflow | null {
     }
   }
 
-  return eventNode ? new Workflow(eventNode) : null;
+  return eventNode ? new Workflow(eventNode, workflowNode.data.name) : null;
 }

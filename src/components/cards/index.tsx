@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { NodeProps } from "reactflow";
 import { GraphNodeProps } from "../../domain";
 import { EventNode } from "../../domain/events";
 import { JobNode } from "../../domain/jobs";
+import { WorkflowNode } from "../../domain/workflow";
 import { assertUnreachable } from "../../utils";
 import { EventCard } from "./EventCard";
 import { JobCard } from "./JobCard";
@@ -15,7 +16,7 @@ function getInternalCard(id: string, data: GraphNodeProps) {
     case "Jobs":
       return () => JobCard(id, data as JobNode);
     case "Workflow":
-      return () => WorkflowCard();
+      return () => WorkflowCard(id, data as WorkflowNode);
     default:
       assertUnreachable(data);
   }
